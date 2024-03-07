@@ -25,12 +25,16 @@ public class ThingsController : ControllerBase
         return things;
     }
 
+    /// <summary>
+    /// Foo' UNION SELECT Id, Username, Password from Users--
+    /// </summary>
+    /// <param name="query"></param>
+    /// <returns></returns>
     [HttpGet("search")]
     public IEnumerable<Thing> Search(string query)
     {
         var sqlQuery = "SELECT Id, Name, Description FROM Things WHERE Name LIKE '%" + query + "%' OR Description LIKE '%" + query + "%'";
-        _logger.LogInformation("Performing search: {query}", sqlQuery);
-        
+
         var things = _context.Things.FromSqlRaw(sqlQuery);
         return things;
     }
